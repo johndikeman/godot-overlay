@@ -86,7 +86,33 @@
     pkgs.buildFHSEnv {
       name = "godot";
       inherit version;
-      targetPkgs = _pkgs: [drv];
+      targetPkgs =
+        _pkgs:
+        [drv]
+        ++ (
+          with _pkgs;
+            [
+              # runtime libraries the official editor binary links against
+              vulkan-loader
+              libGL
+              xorg.libX11
+              xorg.libXcursor
+              xorg.libXinerama
+              xorg.libXext
+              xorg.libXrandr
+              xorg.libXrender
+              xorg.libXi
+              xorg.libXfixes
+              xorg.libxcb
+              libxkbcommon
+              # optional / dlopen'd
+              wayland
+              fontconfig
+              alsa-lib
+              libpulseaudio
+              dbus
+            ]
+        );
       runScript = "godot";
     };
 
